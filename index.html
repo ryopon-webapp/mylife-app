@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Life</title>
+</head>
+<body>
+  <!-- ナビゲーションバー -->
+  <header class="navbar">
+    <div class="navbar-left">
+      <span class="app-name">My Life</span>
+    </div>
+    <nav class="navbar-right">
+      <a href="index.html">ホーム</a>
+      <a href="#about">アプリ概要</a>
+      <a href="#pricing">料金</a>
+      <a href="signup.html">アカウント作成</a>
+      <a href="signin.html">サインイン</a>
+    </nav>
+  </header>
+
+  <!-- メインコンテンツ -->
+  <main class="main-content">
+    <section class="hero">
+      <h1 class="hero-title">My Life</h1>
+      <p class="hero-subtitle">あなたの日常をもっと便利にする</p>
+    </section>
+
+    <!-- アプリの魅力・説明セクション -->
+    <section id="about" class="about-section">
+      <h2>【My Life】アプリ概要</h2>
+      <p>My Lifeは、日常生活に必要な機能が全てあります！基本機能は、
+        「カレンダー」、「今日やること」、「メモ」「ToDoリスト」があります。
+        プレミアムプランに加入していただくと、全ての機能が使用できるようになります。</p>
+    </section>
+
+
+
+      <section id="pricing" class="pricing-section">
+        <h2>料金</h2>
+        <h3>現在、フリープランのみ加入できます。アカウントの作成は無料です。</h3>
+
+        <div class="pricing-table">
+          <!-- フリープラン -->
+          <div class="pricing-card">
+            <h3>フリー</h3>
+            <p class="price-free">¥0 / 月</p>
+            <ul>
+              <li>基本機能が利用可能</li>
+              <li>データ保存容量: 0.5GB</li>
+              <li>広告表示あり</li>
+            </ul>
+            <a href="signup.html" class="btn_free">無料で始める</a>
+          </div>
+      
+          <!-- プレミアムプラン -->
+          <div class="pricing-card">
+            <h3>プレミアム【準備中】</h3>
+            <p class="price-premium">¥900 / 月</p>
+            <ul>
+              <li>フリープランの機能すべて利用可能</li>
+              <li>データ保存容量: 3GB</li>
+              <li>広告表示なし</li>
+            </ul>
+            <a class="btn_premium">プレミアムに加入する</a>
+          </div>
+        </div>
+      </section>      
+  </main>
+
+
+
+  <!-- フッター -->
+  <footer class="footer">
+    <p>&copy; 2025 My Life. All Rights Reserved.</p>
+  </footer>
+</body>
+</html>
+
+
+
+<style>
+  /* 共通スタイル */
+body {
+font-family: Arial, sans-serif;
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+line-height: 1.6;
+}
+
+a {
+text-decoration: none;
+color: inherit;
+}
+
+ul {
+list-style: none;
+padding: 0;
+}
+
+h1, h2 {
+margin: 0;
+padding: 0;
+}
+
+/* ナビゲーションバー */
+.navbar {
+display: flex;
+justify-content: space-between;
+align-items: center;
+background-color: #0000ff;
+color: #fff;
+padding: 10px 70px;
+position: sticky;
+top: 0;
+z-index: 1000;
+}
+
+.navbar-left {
+font-size: 1.5rem;
+font-weight: bold;
+font-family: ヒラギノ明朝 ProN;
+}
+
+.navbar-right a {
+margin-left: 15px;
+color: #fff;
+font-size: 1rem;
+transition: color 0.3s;
+font-family: ヒラギノ明朝 ProN;
+}
+
+.navbar-right a:hover {
+color: #f4f4f9;
+font-family: ヒラギノ明朝 ProN;
+}
+
+/* メインコンテンツ */
+.main-content {
+text-align: center;
+padding: 50px 20px;
+font-family: ヒラギノ明朝 ProN;
+}
+
+.hero {
+margin-top: 50px;
+font-family: ヒラギノ明朝 ProN;
+}
+
+.hero-title {
+font-size: 8rem;
+font-weight: bold;
+color: #0000ff;
+font-family: ヒラギノ明朝 ProN;
+}
+
+.hero-subtitle {
+font-size: 1.5rem;
+color: #000000;
+margin-top: 10px;
+font-family: ヒラギノ明朝 ProN;
+}
+
+/* セクション */
+section {
+padding: 40px 20px;
+}
+
+.about {
+background-color: #f9f9f9;
+}
+
+.pricing {
+background-color: #ffffff;
+}
+
+/* フッター */
+.footer {
+text-align: center;
+padding: 10px 20px;
+background-color: #0000ff;
+color: #fff;
+font-family: ヒラギノ明朝 ProN;
+}
+
+
+
+/* 料金プラン */
+.pricing-section {
+padding: 50px 20px;
+background-color: #ffffff;
+text-align: center;
+}
+
+.pricing-section h2 {
+font-size: 2rem;
+margin-bottom: 10px;
+}
+
+.pricing-section p {
+font-size: 1rem;
+color: #666;
+margin-bottom: 30px;
+}
+
+.pricing-table {
+display: flex;
+justify-content: center;
+gap: 20px;
+flex-wrap: wrap;
+}
+
+.pricing-card {
+background: #fff;
+border: 1px solid #ddd;
+border-radius: 8px;
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+padding: 20px;
+width: 300px;
+text-align: center;
+transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pricing-card:hover {
+transform: translateY(-10px);
+box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.pricing-card h3 {
+font-size: 1.5rem;
+color: #000000;
+margin-bottom: 10px;
+}
+
+.pricing-card .price {
+font-size: 2rem;
+font-weight: bold;
+color: #000000;
+margin-bottom: 20px;
+}
+
+.pricing-card ul {
+list-style: none;
+padding: 0;
+margin: 0 0 20px 0;
+text-align: left;
+}
+
+.pricing-card ul li {
+font-size: 1rem;
+color: #000000;
+margin-bottom: 10px;
+padding-left: 10px;
+position: relative;
+}
+
+.pricing-card ul li::before {
+content: "✔";
+color: #0000ff;
+position: absolute;
+left: 0;
+font-size: 1rem;
+}
+
+.pricing-card .btn:hover {
+background-color: #0056b3;
+}
+
+h3 {
+color: red;
+}
+
+
+
+.pricing-card .btn_free {
+padding: 10px 20px;
+font-size: 1rem;
+color: #fff;
+background-color: #0000ff;
+border: none;
+border-radius: 4px;
+cursor: pointer;
+transition: background-color 0.3s ease;
+}
+
+
+
+.pricing-card .btn_premium {
+padding: 10px 20px;
+font-size: 1rem;
+color: #fff;
+background-color: #7d7d7d;
+border: none;
+border-radius: 4px;
+cursor: pointer;
+transition: background-color 0.3s ease;
+}
+</style>

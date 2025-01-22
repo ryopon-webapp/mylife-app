@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ボイスメモ</title>
+</head>
+<body>
+  <div class="voice-memo-container">
+    <h1>ボイスメモ</h1>
+    <button id="start-btn">録音開始</button>
+    <button id="stop-btn" disabled>録音停止</button>
+    <button id="play-btn" disabled>再生</button>
+    <button id="download-btn" disabled>ダウンロード</button>
+    <div id="status"></div>
+  </div>
+</body>
+</html>
+
+
+
+<style>
+    /* 基本的なスタイル */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f9;
+  color: #333;
+  text-align: center;
+}
+
+/* ボイスメモコンテナ */
+.voice-memo-container {
+  max-width: 600px;
+  margin: 50px auto;
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* ヘッダー */
+h1 {
+  color: #0000ff;
+  margin-bottom: 20px;
+}
+
+/* ボタン */
+button {
+  padding: 10px 15px;
+  background-color: #0000ff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 10px;
+}
+
+button:hover {
+  background-color: #0000ff;
+}
+
+button:disabled {
+  background-color: #e0e0e0;
+  cursor: not-allowed;
+}
+
+/* ステータス表示 */
+#status {
+  margin-top: 20px;
+  font-size: 16px;
+  color: #0000ff;
+}
+  </style>
+
+
+
+<script>
+    let mediaRecorder;
+let audioChunks = [];
+let audioBlob;
+let audioUrl;
+let audio;
+
+const startBtn = document.getElementById('start-btn');
+const stopBtn = document.getElementById('stop-btn');
+const playBtn = document.getElementById('play-btn');
+const downloadBtn = document.getElementById('download-btn');
+const statusDiv = document.getElementById('status');
+
+// 録音開始ボタン
+startBtn.addEventListener('click', async () => {
+  try {
+    // マイクへのアクセス要求
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    mediaRecorder = new MediaRecorder(stream);
+
+    // 録音データを保存する
+    mediaRecorder.ondataavailable = event => {
+      audioChunks.push(event.data);
+    };
+
+    // 録音停止後の処理
+    mediaRecorder.onstop = () => {
+      audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+      audioUrl = URL.createObjectURL(audioBlob);
+      audio = new Audio(audioUrl);
+
+      // 再生とダウンロードボタンを有効化
+      playBtn.disabled = false;
+      downloadBtn.disabled = false;
+      statusDiv.textContent = "録音が完了しました。";
+
+      // ボタンの状態変更
+      stopBtn.disabled = true;
+      startBtn.disabled = false;
+    };
+
+    // 録音開始
+    mediaRecorder.start();
+    statusDiv.textContent = "録音中...";
+    startBtn.disabled = true;
+    stopBtn.disabled = false;
+  } catch (err) {
+    console.error('マイクのアクセスに失敗しました:', err);
+    statusDiv.textContent = "マイクのアクセスに失敗しました。";
+  }
+});
+
+// 録音停止ボタン
+stopBtn.addEventListener('click', () => {
+  mediaRecorder.stop();
+});
+
+// 再生ボタン
+playBtn.addEventListener('click', () => {
+  audio.play();
+  statusDiv.textContent = "再生中...";
+});
+
+// ダウンロードボタン
+downloadBtn.addEventListener('click', () => {
+  const a = document.createElement('a');
+  a.href = audioUrl;
+  a.download = 'voice-memo.wav';
+  a.click();
+});
+</script>

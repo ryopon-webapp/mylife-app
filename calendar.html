@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>シンプルカレンダー</title>
+</head>
+<body>
+    <div class="calendar-container">
+        <div class="calendar-header">
+            <button id="prevMonth">前月</button>
+            <h2 id="monthYear"></h2>
+            <button id="nextMonth">次月</button>
+        </div>
+        <table class="calendar">
+            <thead>
+                <tr>
+                    <th class="weekdays">日</th>
+                    <th class="weekdays">月</th>
+                    <th class="weekdays">火</th>
+                    <th class="weekdays">水</th>
+                    <th class="weekdays">木</th>
+                    <th class="weekdays">金</th>
+                    <th class="weekdays">土</th>
+                </tr>
+            </thead>
+            <tbody id="calendarBody"></tbody>
+        </table>
+        <div id="eventModal" class="modal">
+            <div class="modal-content">
+                <span id="closeModal" class="close">&times;</span>
+                <h3>予定を追加</h3>
+                <input type="text" id="eventInput" placeholder="予定を入力">
+                <button id="addEvent">追加</button>
+            </div>
+        </div>
+        <div id="eventListModal" class="modal">
+            <div class="modal-content">
+                <span id="closeEventListModal" class="close">&times;</span>
+                <h3>予定一覧</h3>
+                <ul id="eventList"></ul>
+                <button id="showAddEventModal">予定追加</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f4f4f9;
+}
+
+.calendar-container {
+    width: 400px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.calendar-header h2 {
+    margin: 0;
+}
+
+button {
+    background-color: #0000ff;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+button:hover {
+    background-color: #0000ff;
+}
+
+table.calendar {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table.calendar th, table.calendar td {
+    width: 14.28%;
+    height: 50px;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid #dddddd;
+}
+
+table.calendar td {
+    cursor: pointer;
+}
+
+table.calendar td.blue {
+    background-color: lightblue;
+}
+
+table.calendar td.red {
+    background-color: lightcoral;
+}
+
+table.calendar td.event {
+    background-color: yellow;
+}
+
+#eventModal, #eventListModal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: white;
+    margin: 15% auto;
+    padding: 20px;
+    width: 300px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 20px;
+    cursor: pointer;
+}
+</style>
+
+
+
+<script>
+  const daysOfWeek = ['日', '月', '火', '水', '木', '金', '土'];
+let currentDate = new Date();
+let selectedDate = null;
+let events = {};
+
+const prevMonthButton = document.getElementById('prevMonth');
+const nextMonthButton = document.getElementById('nextMonth');
+const monthYearElement = document.getElementById('monthYear');
+const calendarBody = document.getElementById('calendarBody');
+const eventModal = document.getElementById('eventModal');
+const closeModalButton = document.getElementById('closeModal');
+const eventInput = document.getElementById('eventInput');
+const addEventButton = document.getElementById('addEvent');
+const eventListModal = document.getElementById('eventListModal');
+const closeEventListModalButton = document.getElementById('closeEventListModal');
+const eventList = document.getElementById('eventList');
+const showAddEventModalButton = document.getElementById('showAddEventModal');
+
+// Display the current month and calendar days
+function renderCalendar() {
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+    monthYearElement.textContent = `${year}年 ${month + 1}月`;
+
+    const firstDayOfMonth = new Date(year, month, 1);
+    const lastDayOfMonth = new Date(year, month + 1, 0);
+    const daysInMonth = lastDayOfMonth.getDate();
+
+    // Clear the calendar body
+    calendarBody.innerHTML = '';
+
+    // Start day of the month (0 = Sunday, 6 = Saturday)
+    let firstDay = firstDayOfMonth.getDay();
+
+    // Add empty cells before the first day of the month
+    let row = document.createElement('tr');
+    for (let i = 0; i < firstDay; i++) {
+        row.appendChild(document.createElement('td'));
+    }
+
+    // Add the days of the month
+    for (let day = 1; day <= daysInMonth; day++) {
+        const cell = document.createElement('td');
+        cell.textContent = day;
+
+        const dateKey = `${year}-${month + 1}-${day}`;
+
+        // Add color to weekends
+        if (firstDay % 7 === 0) {
+            cell.classList.add('blue');
+        } else if (firstDay % 7 === 6) {
+            cell.classList.add('red');
+        }
+
+        // Add event if exists
+        if (events[dateKey]) {
+            cell.classList.add('event');
+        }
+
+        // Add click event to show the event list
+        cell.addEventListener('click', () => {
+            selectedDate = dateKey;
+            showEventList();
+        });
+
+        row.appendChild(cell);
+        firstDay++;
+
+        if (firstDay % 7 === 0) {
+            calendarBody.appendChild(row);
+            row = document.createElement('tr');
+        }
+    }
+
+    if (firstDay % 7 !== 0) {
+        calendarBody.appendChild(row);
+    }
+}
+
+// Show event list for the selected day
+function showEventList() {
+    if (events[selectedDate]) {
+        eventList.innerHTML = events[selectedDate].map((event, index) => {
+            return `<li>${event} <button onclick="deleteEvent(${index})">削除</button></li>`;
+        }).join('');
+    } else {
+        eventList.innerHTML = '<li>予定はありません</li>';
+    }
+    eventListModal.style.display = 'block';
+}
+
+// Add event to the selected day
+addEventButton.addEventListener('click', () => {
+    if (selectedDate) {
+        const event = eventInput.value.trim();
+        if (event) {
+            if (!events[selectedDate]) {
+                events[selectedDate] = [];
+            }
+            events[selectedDate].push(event);
+            renderCalendar();
+            eventInput.value = '';
+            eventModal.style.display = 'none';
+        }
+    }
+});
+
+// Delete event
+function deleteEvent(index) {
+    events[selectedDate].splice(index, 1);
+    renderCalendar();
+    showEventList();
+}
+
+// Close modals
+closeModalButton.addEventListener('click', () => {
+    eventModal.style.display = 'none';
+});
+closeEventListModalButton.addEventListener('click', () => {
+    eventListModal.style.display = 'none';
+});
+
+// Show the event add modal
+showAddEventModalButton.addEventListener('click', () => {
+    eventModal.style.display = 'block';
+});
+
+// Navigate to previous month
+prevMonthButton.addEventListener('click', () => {
+    currentDate.setMonth(currentDate.getMonth() - 1);
+    renderCalendar();
+});
+
+// Navigate to next month
+nextMonthButton.addEventListener('click', () => {
+    currentDate.setMonth(currentDate.getMonth() + 1);
+    renderCalendar();
+});
+
+// Initialize the calendar
+renderCalendar();
+
+</script>

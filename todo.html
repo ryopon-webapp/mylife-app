@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ToDoリスト</title>
+</head>
+<body>
+  <div class="todo-container">
+    <h1>ToDoリスト</h1>
+    <input type="text" id="todo-input" placeholder="新しいタスクを追加..." />
+    <button id="add-btn">追加</button>
+    <ul id="todo-list"></ul>
+  </div>
+</body>
+</html>
+
+
+
+<style>
+    /* 基本的なスタイル */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f9;
+  color: #333;
+  text-align: center;
+}
+
+/* ToDoコンテナ */
+.todo-container {
+  max-width: 600px;
+  margin: 50px auto;
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* ヘッダー */
+h1 {
+  color: #0000ff;
+  margin-bottom: 20px;
+}
+
+/* タスク入力 */
+input[type="text"] {
+  padding: 10px;
+  width: 80%;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+button {
+  padding: 10px 15px;
+  background-color: #0000ff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #4500a0;
+}
+
+/* ToDoリスト */
+ul {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f9f9f9;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+li.completed {
+  text-decoration: line-through;
+  background-color: #e0e0e0;
+}
+
+button.delete-btn {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button.delete-btn:hover {
+  background-color: darkred;
+}
+  </style>
+
+
+
+<script>
+  document.getElementById('add-btn').addEventListener('click', function() {
+  const input = document.getElementById('todo-input');
+  const todoText = input.value.trim();
+
+  if (todoText === '') {
+    alert('タスクを入力してください');
+    return;
+  }
+
+  const todoItem = document.createElement('li');
+  todoItem.innerHTML = `
+    <span>${todoText}</span>
+    <button class="delete-btn">削除</button>
+  `;
+
+  // 追加したタスクをクリックしたら完了状態にする
+  todoItem.addEventListener('click', function() {
+    todoItem.classList.toggle('completed');
+  });
+
+  // 削除ボタンの処理
+  const deleteBtn = todoItem.querySelector('.delete-btn');
+  deleteBtn.addEventListener('click', function(event) {
+    event.stopPropagation(); // 他のクリックイベントが発火しないようにする
+    todoItem.remove();
+  });
+
+  // タスクをリストに追加
+  document.getElementById('todo-list').appendChild(todoItem);
+
+  // 入力フィールドをリセット
+  input.value = '';
+});
+</script>

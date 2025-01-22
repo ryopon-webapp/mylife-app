@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ホーム</title>
+</head>
+<body>
+  <header>
+    <h1>ホーム</h1>
+  </header>
+  <main>
+    <div class="card-container">
+      <div class="card" onclick="navigateTo('calendar.html')">
+        <h2>カレンダー</h2>
+        <p>予定の追加・確認</p>
+      </div>
+
+      <div class="card" onclick="navigateTo('memo.html')">
+        <h2>メモ</h2>
+        <p>忘れないようにメモを取る</p>
+      </div>
+
+      <div class="card" onclick="navigateTo('voicememo.html')">
+        <h2>ボイスメモ</h2>
+        <p>ボイスメモ（テキスト変換可能）</p>
+      </div>
+
+      <div class="card" onclick="navigateTo('todo.html')">
+        <h2>ToDoリスト</h2>
+        <p>今週やること</p>
+      </div>
+
+      <div class="card" onclick="navigateTo('budget.html')">
+        <h2>家計簿</h2>
+        <p>収支を簡単に記録・管理</p>
+      </div>
+
+      <div class="card" onclick="navigateTo('.html')">
+        <h2>口座連携</h2>
+        <p>口座を連携してまとめて残高を見る</p>
+      </div>
+
+      <div class="card" onclick="navigateTo('private-chat.html')">
+        <h2>プライベートチャット</h2>
+        <p>家族や友達と連絡</p>
+      </div>
+
+      <div class="card" onclick="navigateTo('group-chat.html')">
+        <h2>グループチャット</h2>
+        <p>家族写真や友達との写真を共有</p>
+      </div>
+
+      <div class="card" onclick="navigateTo('')">
+        <h2>写真アルバム</h2>
+        <p>思い出の写真を見る</p>
+      </div>
+
+      <div class="card" onclick="navigateTo('')">
+        <h2>ファイル共有</h2>
+        <p>作成したファイルを共有</p>
+      </div>
+
+    </div>
+  </main>
+</body>
+</html>
+
+
+
+<style>
+  /* 全体スタイル */
+body {
+font-family: Arial, sans-serif;
+margin: 0;
+padding: 0;
+background-color: #f4f4f9;
+color: #333;
+text-align: center;
+}
+
+/* ヘッダー */
+header {
+background-color: #0000ff;
+color: white;
+padding: 20px 0;
+margin-bottom: 20px;
+}
+
+header h1 {
+margin: 0;
+}
+
+/* カードコンテナ */
+.card-container {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+gap: 20px;
+padding: 20px;
+max-width: 1200px;
+margin: 0 auto;
+}
+
+/* カード */
+.card {
+background-color: white;
+border-radius: 10px;
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+padding: 20px;
+cursor: pointer;
+transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+transform: translateY(-5px);
+box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.card h2 {
+margin: 0 0 10px;
+color: #0000ff;
+}
+
+.card p {
+margin: 0;
+color: #555;
+font-size: 14px;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 600px) {
+.card-container {
+  grid-template-columns: 1fr;
+}
+}
+</style>
+
+
+
+<script>
+function navigateTo(page) {
+window.location.href = page;
+}
+</script>

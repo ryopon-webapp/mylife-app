@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>メモ</title>
+</head>
+<body>
+  <div class="memo-container">
+    <h1>メモ</h1>
+    <textarea id="memo-input" placeholder="新しいメモを入力..." rows="6" cols="30"></textarea>
+    <button id="add-btn">追加</button>
+    <div id="memo-list"></div>
+  </div>
+</body>
+</html>
+
+
+
+<style>
+  /* 基本的なスタイル */
+body {
+font-family: Arial, sans-serif;
+margin: 0;
+padding: 0;
+background-color: #f4f4f9;
+color: #333;
+text-align: center;
+}
+
+/* メモコンテナ */
+.memo-container {
+max-width: 600px;
+margin: 50px auto;
+background-color: white;
+padding: 30px;
+border-radius: 10px;
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* ヘッダー */
+h1 {
+color: #0000ff;
+margin-bottom: 20px;
+}
+
+/* メモ入力エリア */
+textarea {
+width: 80%;
+padding: 10px;
+border: 1px solid #ccc;
+border-radius: 5px;
+font-size: 16px;
+margin-bottom: 20px;
+resize: none;
+}
+
+/* ボタン */
+button {
+padding: 10px 15px;
+background-color: #0000ff;
+color: white;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+}
+
+button:hover {
+background-color: #0000ff;
+}
+
+/* メモリスト */
+.memo {
+background-color: #f9f9f9;
+padding: 10px;
+margin-bottom: 10px;
+border-radius: 5px;
+font-size: 16px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+button.delete-btn {
+background-color: red;
+color: white;
+border: none;
+padding: 5px 10px;
+border-radius: 5px;
+cursor: pointer;
+}
+
+button.delete-btn:hover {
+background-color: darkred;
+}
+</style>
+
+
+
+<script>
+// メモリストをローカルストレージから読み込み
+window.onload = function() {
+loadMemoList();
+};
+
+// メモ追加ボタンのイベントリスナー
+document.getElementById('add-btn').addEventListener('click', function() {
+const memoInput = document.getElementById('memo-input');
+const memoText = memoInput.value.trim();
+
+if (memoText === '') {
+  alert('メモを入力してください');
+  return;
+}
+
+addMemo(memoText);
+memoInput.value = '';  // 入力フィールドをリセット
+});
+
+// メモをローカルストレージに保存し、表示する関数
+function addMemo(text) {
+const memoList = getMemoList();
+memoList.push(text);
+localStorage.setItem('memoList', JSON.stringify(memoList));
+loadMemoList();
+}
+
+// メモリストをローカルストレージから取得
+function getMemoList() {
+const memoList = localStorage.getItem('memoList');
+return memoList ? JSON.parse(memoList) : [];
+}
+
+// メモリストを表示する関数
+function loadMemoList() {
+const memoList = getMemoList();
+const memoListDiv = document.getElementById('memo-list');
+memoListDiv.innerHTML = '';  // 初期化
+
+memoList.forEach((memoText, index) => {
+  const memoDiv = document.createElement('div');
+  memoDiv.classList.add('memo');
+  memoDiv.innerHTML = `
+    <span>${memoText}</span>
+    <button class="delete-btn" onclick="deleteMemo(${index})">削除</button>
+  `;
+  memoListDiv.appendChild(memoDiv);
+});
+}
+
+// メモを削除する関数
+function deleteMemo(index) {
+const memoList = getMemoList();
+memoList.splice(index, 1);  // 指定されたインデックスのメモを削除
+localStorage.setItem('memoList', JSON.stringify(memoList));
+loadMemoList();  // メモリストを更新
+}
+</script>

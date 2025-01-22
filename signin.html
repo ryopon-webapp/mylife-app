@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>サインイン / My Life</title>
+</head>
+<body>
+  <div class="container">
+    <div class="form-container">
+      <h1>サインイン</h1>
+      <form id="signin-form">
+        <div class="input-group">
+          <label for="signin-email">メールアドレス</label>
+          <input type="email" id="signin-email" placeholder="メールアドレスを入力" required>
+        </div>
+        <div class="input-group">
+          <label for="signin-password">パスワード</label>
+          <input type="password" id="signin-password" placeholder="パスワードを入力" required>
+        </div>
+        <button type="submit" class="btn" href="home.html">サインイン</button>
+      </form>
+      <p>アカウントをお持ちでないですか？ <a href="signup.html">アカウントの作成</a></p>
+    </div>
+  </div>
+</body>
+</html>
+
+
+
+<style>
+  /* styles.css */
+body {
+font-family: Arial, sans-serif;
+background-color: #f4f4f9;
+margin: 0;
+padding: 0;
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+box-sizing: border-box;
+}
+
+* {
+box-sizing: inherit; /* ボックスサイズを統一 */
+}
+
+.container {
+max-width: 400px;
+width: 90%; /* 小さな画面での調整 */
+background: #fff;
+border-radius: 8px;
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+padding: 20px;
+overflow: hidden; /* コンテンツがはみ出ないようにする */
+}
+
+.form-container {
+margin-bottom: 30px;
+}
+
+h1 {
+margin-bottom: 20px;
+font-size: 1.8rem;
+color: #333;
+text-align: center;
+}
+
+.input-group {
+margin-bottom: 15px;
+}
+
+.input-group label {
+display: block;
+margin-bottom: 5px;
+font-weight: bold;
+color: #555;
+}
+
+.input-group input {
+width: 100%; /* 幅を親要素に合わせる */
+padding: 10px;
+font-size: 1rem;
+border: 1px solid #ccc;
+border-radius: 4px;
+}
+
+.input-group input:focus {
+outline: none;
+border-color: #0000ff;
+box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.btn {
+width: 100%; /* ボタンも幅を統一 */
+padding: 10px;
+font-size: 1rem;
+color: #fff;
+background-color: #0000ff;
+border: none;
+border-radius: 4px;
+cursor: pointer;
+transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+background-color: #0056b3;
+}
+
+p {
+text-align: center;
+font-size: 0.9rem;
+color: #666;
+}
+
+p a {
+color: #0000ff;
+text-decoration: none;
+}
+
+p a:hover {
+text-decoration: underline;
+}
+</style>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>家計簿</title>
+</head>
+<body>
+  <div class="container">
+    <h1>家計簿</h1>
+
+    <!-- 入力フォーム -->
+    <div class="form">
+      <input type="text" id="description" placeholder="説明" />
+      <input type="number" id="amount" placeholder="金額" />
+      <select id="type">
+        <option value="income">収入</option>
+        <option value="expense">支出</option>
+      </select>
+      <button id="addButton">追加</button>
+    </div>
+
+    <!-- 概要表示 -->
+    <div class="summary">
+      <h2>合計: <span id="total">0</span> 円</h2>
+    </div>
+
+    <!-- 家計簿一覧 -->
+    <table id="transactionTable">
+      <thead>
+        <tr>
+          <th>説明</th>
+          <th>金額</th>
+          <th>タイプ</th>
+          <th>削除</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- ここにトランザクションが追加される -->
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>
+
+
+
+<style>
+  /* 全体のスタイル */
+body {
+font-family: Arial, sans-serif;
+background-color: #f9f9f9;
+color: #333;
+margin: 0;
+padding: 20px;
+}
+
+.container {
+max-width: 800px;
+margin: 0 auto;
+background: #fff;
+padding: 20px;
+border-radius: 8px;
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+text-align: center;
+color: #0000ff;
+}
+
+.form {
+display: flex;
+justify-content: space-between;
+gap: 10px;
+margin-bottom: 20px;
+}
+
+.form input, .form select, .form button {
+padding: 10px;
+border: 1px solid #ddd;
+border-radius: 4px;
+font-size: 16px;
+}
+
+.form button {
+background-color: #0000ff;
+color: #fff;
+cursor: pointer;
+border: none;
+}
+
+.form button:hover {
+background-color: #0000ff;
+}
+
+.summary {
+margin-bottom: 20px;
+text-align: center;
+font-size: 1.2em;
+}
+
+table {
+width: 100%;
+border-collapse: collapse;
+margin-top: 20px;
+}
+
+table th, table td {
+padding: 10px;
+text-align: center;
+border: 1px solid #ddd;
+}
+
+table th {
+background-color: #f2f2f2;
+}
+
+.delete-btn {
+background-color: #e74c3c;
+color: white;
+border: none;
+padding: 5px 10px;
+border-radius: 4px;
+cursor: pointer;
+}
+
+.delete-btn:hover {
+background-color: #c0392b;
+}
+</style>
+
+
+
+<script>
+  // DOM要素の取得
+const descriptionInput = document.getElementById('description');
+const amountInput = document.getElementById('amount');
+const typeSelect = document.getElementById('type');
+const addButton = document.getElementById('addButton');
+const transactionTable = document.getElementById('transactionTable').querySelector('tbody');
+const totalDisplay = document.getElementById('total');
+
+let total = 0; // 合計金額の管理
+
+// トランザクション追加処理
+addButton.addEventListener('click', () => {
+const description = descriptionInput.value.trim();
+const amount = parseFloat(amountInput.value.trim());
+const type = typeSelect.value;
+
+if (!description || isNaN(amount)) {
+  alert('説明と金額を正しく入力してください。');
+  return;
+}
+
+// 合計金額を更新
+total += type === 'income' ? amount : -amount;
+totalDisplay.textContent = total;
+
+// 家計簿一覧に追加
+const row = document.createElement('tr');
+
+row.innerHTML = `
+  <td>${description}</td>
+  <td>${amount} 円</td>
+  <td>${type === 'income' ? '収入' : '支出'}</td>
+  <td><button class="delete-btn">削除</button></td>
+`;
+
+// 削除ボタンの動作
+row.querySelector('.delete-btn').addEventListener('click', () => {
+  transactionTable.removeChild(row);
+  total -= type === 'income' ? amount : -amount;
+  totalDisplay.textContent = total;
+});
+
+transactionTable.appendChild(row);
+
+// フォームをリセット
+descriptionInput.value = '';
+amountInput.value = '';
+});
+</script>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>アカウント作成 / My Life</title>
+</head>
+<body>
+  <div class="container">
+    <div class="form-container">
+      <h1>アカウント作成</h1>
+      <form id="signup-form">
+        <div class="input-group">
+            <label for="signup-username">
+              ユーザー名 <span class="required">*</span>
+            </label>
+            <input type="text" id="signup-username" placeholder="mylife" required>
+          </div>
+          <div class="input-group">
+            <label for="signup-mailaddress">
+              メールアドレス <span class="required">*</span>
+            </label>
+            <input type="text" id="signup-mailaddress" placeholder="email@example.com" required>
+          </div>
+          <div class="input-group">
+            <div class="input-group">
+                <label for="password">
+                  パスワード <span class="required">*</span>
+                </label>
+                <input type="password" id="password1" placeholder="●●●●●●" required>
+              </div>
+              <div class="input-group">
+                <label for="password">
+                  パスワード <span class="required">*</span>
+                </label>
+                <input type="password" id="password2" placeholder="●●●●●●" required>
+              </div>
+                            
+                                        
+        <button type="submit" class="btn">作成</button>
+      </form>
+      <p>アカウントをお持ちですか？ <a href="signin.html">サインイン</a></p>
+    </div>
+  </div>
+</body>
+</html>
+
+
+
+<style>
+  /* styles.css */
+body {
+font-family: Arial, sans-serif;
+background-color: #f4f4f9;
+margin: 0;
+padding: 0;
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+box-sizing: border-box;
+}
+
+* {
+box-sizing: inherit;
+}
+
+.container {
+max-width: 400px;
+width: 90%;
+background: #fff;
+border-radius: 8px;
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+padding: 20px;
+overflow: hidden;
+}
+
+.form-container {
+margin-bottom: 30px;
+}
+
+h1 {
+margin-bottom: 20px;
+font-size: 1.8rem;
+color: #333;
+text-align: center;
+}
+
+.input-group {
+margin-bottom: 15px;
+}
+
+.input-group label {
+display: flex;
+align-items: center;
+font-weight: bold;
+color: #555;
+}
+
+.input-group .required {
+color: red;
+margin-left: 5px; /* 米印をテキストの横に配置 */
+font-size: 1rem;
+}
+
+.input-group input {
+width: 100%;
+padding: 10px;
+font-size: 1rem;
+border: 1px solid #ccc;
+border-radius: 4px;
+margin-top: 5px;
+}
+
+.input-group input:focus {
+outline: none;
+border-color: #007bff;
+box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.btn {
+width: 100%;
+padding: 10px;
+font-size: 1rem;
+color: #fff;
+background-color: #0000ff;
+border: none;
+border-radius: 4px;
+cursor: pointer;
+transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+background-color: #0000ff;
+}
+
+p {
+text-align: center;
+font-size: 0.9rem;
+color: #666;
+}
+
+p a {
+color: #0000ff;
+text-decoration: none;
+}
+
+p a:hover {
+text-decoration: underline;
+}
+</style>
